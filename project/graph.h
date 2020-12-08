@@ -3,6 +3,9 @@
 #include <set>
 #include <map>
 #include <string>
+#include <stack>
+#include <list>
+#include <vector>
 
 class Graph
 {
@@ -11,11 +14,16 @@ private:
     std::map<std::pair<std::string, std::string>, unsigned int> edge_weigh;
 
 public:
-    Graph(/* args */); ///todo()!
-    ~Graph();          ///todo()!
+    // Graph(/* args */); ///todo()!
+    // ~Graph();          ///todo()!
 
     void add_vertex(const std::string &);
     void add_edge(const std::string &, const std::string &, const unsigned int &);
+    bool is_it_reachable(const std::string &, const std::string &);
+    void find_all_paths(const std::string &, const std::string &);
+
+private:
+    void find_all_paths_helper(const std::string &, const std::string &, std::map<std::string, bool> &, std::list<std::vector<std::string>> &, std::vector<std::string> &);
 };
 
 #endif
