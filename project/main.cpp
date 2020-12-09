@@ -18,4 +18,6 @@ int main()
 
     std::cout << test_graph.is_it_reachable("3", "4") << std::endl;
     test_graph.find_all_paths("3", "4");
+    std::cout << test_graph.can_reach_all_vertices("4") << std::endl;
+    test_graph.find_all_dead_ends();
 }

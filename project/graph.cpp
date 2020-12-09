@@ -127,3 +127,33 @@ void Graph::find_all_paths_helper(const std::string &from_vertex, const std::str
     visited_vertices[from_vertex] = false;
     current_path.pop_back();
 }
+
+bool Graph::can_reach_all_vertices(const std::string &from_vertex)
+{
+    for (auto vertex : vertices)
+    {
+        if (!is_it_reachable(from_vertex, vertex.first))
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+void Graph::find_all_dead_ends()
+{
+    for (auto vertex : vertices)
+    {
+        if (vertex.second.empty())
+        {
+            for (auto search_vertices : vertices)
+            {
+                if (search_vertices.second.count(vertex.first) == 1)
+                {
+                    std::cout << search_vertices.first << " - " << vertex.first << std::endl;
+                }
+            }
+        }
+    }
+}
