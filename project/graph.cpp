@@ -157,7 +157,6 @@ void Graph::find_all_paths(const std::string &from_vertex, const std::string &to
         paths.remove(min_path);
     }
 }
-
 void Graph::find_all_paths_helper(const std::string &from_vertex, const std::string &to_vertex, std::map<std::string, bool> &visited_vertices, std::list<std::vector<std::string>> &paths, std::vector<std::string> &current_path)
 {
     visited_vertices[from_vertex] = true;
@@ -177,7 +176,6 @@ void Graph::find_all_paths_helper(const std::string &from_vertex, const std::str
             }
         }
     }
-
     visited_vertices[from_vertex] = false;
     current_path.pop_back();
 }
@@ -247,4 +245,45 @@ bool Graph::mini_tour_and_return(const std::string &from_vertex)
     }
 
     return false;
+}
+
+void Graph::start_euler_tour(const std::string &starting_vertex)
+{
+    std::map<std::string, unsigned int> edges_per_vertex;
+
+    for (auto vertex : vertices)
+    {
+        edges_per_vertex[vertex.first] = vertex.second.size();
+    }
+
+    std::stack<std::string> current_path;
+    std::vector<std::string> cycle;
+
+    current_path.push(starting_vertex);
+    std::string current_vertex = starting_vertex;
+    while (!current_path.empty())
+    {
+        if (edges_per_vertex[current_vertex])
+        {
+            current_path.push(current_vertex);
+            std::string next_vertex = *vertices[current_vertex].rbegin();
+
+            edges_per_vertex[current_vertex]--;
+            vertices[current_vertex].erase(next_vertex);
+
+            current_vertex = next_vertex;
+        }
+        else
+        {
+            cycle.push_back(current_vertex);
+
+            current_vertex = current_path.top();
+            current_path.pop();
+        }
+    }
+    for (auto element = cycle.rbegin(); element != cycle.rend(); ++element)
+    {
+        std::cout << *element << " - > ";
+    }
+    std::cout << starting_vertex << std::endl;
 }

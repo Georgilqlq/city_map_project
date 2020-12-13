@@ -25,9 +25,9 @@ public:
     bool can_reach_all_vertices(const std::string &);
     void find_all_dead_ends();
     bool mini_tour_and_return(const std::string &);
+    void start_euler_tour(const std::string &);
 
 private:
     void find_all_paths_helper(const std::string &, const std::string &, std::map<std::string, bool> &, std::list<std::vector<std::string>> &, std::vector<std::string> &);
 };
-
 #endif
