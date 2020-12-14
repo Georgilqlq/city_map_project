@@ -95,25 +95,29 @@ void Graph::find_all_paths(const std::string &from_vertex, const std::string &to
 
     find_all_paths_helper(from_vertex, to_vertex, visited_vertices, paths, current_path);
 
+    unsigned int min_weight;
+    std::vector<std::string> min_path;
     for (size_t i = 0; i < 3 && !paths.empty(); i++)
     {
-        unsigned int min_weight = UINT_MAX;
-        std::vector<std::string> min_path;
-        for (auto vector : paths)
-        {
-            unsigned int total_weight = 0;
-            std::vector<std::string>::const_iterator end = vector.cend() - 1;
-            for (std::vector<std::string>::const_iterator element = vector.cbegin(); element != end; ++element)
-            {
-                total_weight = total_weight + edge_weigh[std::make_pair(*element, *(element + 1))];
-            }
+        min_weight = UINT_MAX;
+        min_path.clear();
+        find_min_path(paths, min_weight, min_path);
 
-            if (total_weight < min_weight)
-            {
-                min_weight = total_weight;
-                min_path = vector;
-            }
-        }
+        // for (auto vector : paths)
+        // {
+        //     unsigned int total_weight = 0;
+        //     std::vector<std::string>::const_iterator end = vector.cend() - 1;
+        //     for (std::vector<std::string>::const_iterator element = vector.cbegin(); element != end; ++element)
+        //     {
+        //         total_weight = total_weight + edge_weigh[std::make_pair(*element, *(element + 1))];
+        //     }
+
+        //     if (total_weight < min_weight)
+        //     {
+        //         min_weight = total_weight;
+        //         min_path = vector;
+        //     }
+        // }
 
         for (auto element : min_path)
         {
