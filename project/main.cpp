@@ -1,8 +1,12 @@
 #include "graph.h"
 #include <iostream>
+// #include <Windows.h>
 
 int main()
 {
+    // SetConsoleCP(866);
+    // SetConsoleOutputCP(866);
+
     Graph test_graph;
     test_graph.add_vertex("1");
     test_graph.add_vertex("2");
@@ -43,4 +47,8 @@ int main()
     second_test.add_edge("5", "2", 6);
 
     second_test.start_euler_tour("1");
+
+    Graph third_test("input.txt");
+    third_test.find_all_paths("Попа", "BSFS");
+    std::wcout << "ПопаAAAаааадавaddwa";
 }

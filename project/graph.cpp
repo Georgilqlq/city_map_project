@@ -1,6 +1,32 @@
 #include "graph.h"
 #include <iostream>
 #include <limits>
+#include <fstream>
+
+Graph::~Graph()
+{
+    delete_graph();
+}
+
+Graph::Graph(const std::string &file_name)
+{
+    std::ifstream graph_file(file_name);
+    if (!graph_file.is_open())
+    {
+        throw std::invalid_argument("This file doesn't exist!");
+    }
+
+    std::string vertex_name, neighbour_name;
+    int weight;
+    while (graph_file >> vertex_name)
+    {
+        add_vertex(vertex_name);
+        while (graph_file >> neighbour_name >> weight)
+        {
+            add_edge(vertex_name, neighbour_name, weight);
+        }
+    }
+}
 
 void Graph::add_vertex(const std::string &vertex_name)
 {
@@ -405,4 +431,11 @@ void Graph::print_all_dead_ends(const std::string &dead_end_vertex)
             std::cout << search_vertices.first << " - " << dead_end_vertex << std::endl;
         }
     }
+}
+
+void Graph::delete_graph()
+{
+    vertex_point.clear();
+    vertices.clear();
+    edge_weigh.clear();
 }

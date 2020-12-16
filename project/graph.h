@@ -15,9 +15,10 @@ private:
     std::map<std::pair<std::string, std::string>, unsigned int> edge_weigh;
 
 public:
-    // ~Graph();          ///todo()!
-
     Graph() = default;
+    Graph(const std::string &);
+    ~Graph();
+
     void add_vertex(const std::string &);
     void add_edge(const std::string &, const std::string &, const unsigned int &);
     bool is_it_reachable(const std::string &, const std::string &);
@@ -36,5 +37,6 @@ private:
     void create_visited_vertices(std::map<std::string, bool> &);
     void find_min_path(std::list<std::vector<std::string>> &, unsigned int &, std::vector<std::string> &);
     void print_all_dead_ends(const std::string &);
+    void delete_graph();
 };
 #endif
