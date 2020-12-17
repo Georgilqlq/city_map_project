@@ -28,10 +28,12 @@ public:
     void find_all_dead_ends();
     bool mini_tour_and_return(const std::string &);
     void start_euler_tour(const std::string &);
+    bool has_vertex(const std::string &);
+    void print_neighbours(const std::string &);
+    void load_from_file(const std::string &);
 
 private:
     void find_all_paths_helper(const std::string &, const std::string &, std::map<std::string, bool> &, std::list<std::vector<std::string>> &, std::vector<std::string> &);
-    bool has_vertex(const std::string &);
     bool has_edge(const std::string &, const std::string &); // might not need
     bool searching_through_neighbours(const std::string &, std::map<std::string, bool> &, std::stack<std::string> &, const std::string &);
     void create_visited_vertices(std::map<std::string, bool> &);

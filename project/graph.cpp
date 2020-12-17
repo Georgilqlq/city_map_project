@@ -2,6 +2,7 @@
 #include <iostream>
 #include <limits>
 #include <fstream>
+#include <sstream>
 
 Graph::~Graph()
 {
@@ -10,22 +11,7 @@ Graph::~Graph()
 
 Graph::Graph(const std::string &file_name)
 {
-    std::ifstream graph_file(file_name);
-    if (!graph_file.is_open())
-    {
-        throw std::invalid_argument("This file doesn't exist!");
-    }
-
-    std::string vertex_name, neighbour_name;
-    int weight;
-    while (graph_file >> vertex_name)
-    {
-        add_vertex(vertex_name);
-        while (graph_file >> neighbour_name >> weight)
-        {
-            add_edge(vertex_name, neighbour_name, weight);
-        }
-    }
+    load_from_file(file_name);
 }
 
 void Graph::add_vertex(const std::string &vertex_name)
@@ -438,4 +424,41 @@ void Graph::delete_graph()
     vertex_point.clear();
     vertices.clear();
     edge_weigh.clear();
+}
+
+void Graph::print_neighbours(const std::string &current_vertex)
+{
+    if (!has_vertex(current_vertex))
+    {
+        throw std::invalid_argument("The vertex doesn't exist!");
+    }
+
+    std::cout << "[ ";
+    for (auto neighbour : vertices[current_vertex])
+    {
+        std::cout << neighbour << " ";
+    }
+    std::cout << "]" << std::endl;
+}
+
+void Graph::load_from_file(const std::string &file_name)
+{
+    std::ifstream graph_file(file_name);
+    if (!graph_file.is_open())
+    {
+        throw std::invalid_argument("This file doesn't exist!");
+    }
+
+    std::string vertex_name, neighbour_name, line;
+    int weight;
+    while (std::getline(graph_file, line))
+    {
+        std::istringstream stream_line(line);
+        stream_line >> vertex_name;
+        add_vertex(vertex_name);
+        while (stream_line >> neighbour_name >> weight)
+        {
+            add_edge(vertex_name, neighbour_name, weight);
+        }
+    }
 }

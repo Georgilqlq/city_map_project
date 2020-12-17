@@ -1,5 +1,6 @@
 #include "graph.h"
 #include <iostream>
+#include "city_map.h"
 // #include <Windows.h>
 
 int main()
@@ -49,6 +50,20 @@ int main()
     second_test.start_euler_tour("1");
 
     Graph third_test("input.txt");
-    third_test.find_all_paths("Попа", "BSFS");
-    std::wcout << "ПопаAAAаааадавaddwa";
+    third_test.start_euler_tour("One");
+
+    City_map test_map;
+    test_map.load("input.txt");
+    test_map.change("Zero");
+    test_map.location();
+    test_map.neighbours();
+    test_map.move("Four");
+    test_map.neighbours();
+    test_map.close("Two");
+    test_map.closed();
+    test_map.open("Two");
+    // test_map.tour();
+    test_map.location();
+    test_map.change("Three");
+    test_map.move("Zero");
 }
