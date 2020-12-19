@@ -1,0 +1,8 @@
+digraph visual{
+Four->Zero;
+One->Zero;
+Three->Four;
+Two->One;
+Zero->Three;
+Zero->Two;
+}

@@ -18,4 +18,13 @@ public:
     void open(const std::string &);
     void closed();
     void tour();
+    void user_interface();
+    void image();
+    void dead_ends();
+    void mini_tour();
+    void reach_all();
+
+private:
+    void extract_words(std::string &, std::string &, std::string &);
+    void menu();
 };

@@ -22,6 +22,7 @@ public:
     void add_vertex(const std::string &);
     void add_edge(const std::string &, const std::string &, const unsigned int &);
     bool is_it_reachable(const std::string &, const std::string &);
+    bool is_it_reachable(const std::string &, const std::string &, const std::set<std::string> &);
     void find_all_paths(const std::string &, const std::string &);
     void find_all_paths(const std::string &, const std::string &, const std::set<std::string> &);
     bool can_reach_all_vertices(const std::string &);
@@ -31,6 +32,7 @@ public:
     bool has_vertex(const std::string &);
     void print_neighbours(const std::string &);
     void load_from_file(const std::string &);
+    void visualise(std::ostream &);
 
 private:
     void find_all_paths_helper(const std::string &, const std::string &, std::map<std::string, bool> &, std::list<std::vector<std::string>> &, std::vector<std::string> &);
@@ -40,5 +42,6 @@ private:
     void find_min_path(std::list<std::vector<std::string>> &, unsigned int &, std::vector<std::string> &);
     void print_all_dead_ends(const std::string &);
     void delete_graph();
+    void create_closed_vertices(std::map<std::string, bool> &, const std::set<std::string> &);
 };
 #endif
