@@ -365,7 +365,7 @@ void Graph::visualise(std::ostream &out)
     {
         for (auto neighbour : vertex.second)
         {
-            out << vertex.first << "->" << neighbour << ";" << std::endl;
+            out << vertex.first << "->" << neighbour << "[weight=" << edge_weigh[std::make_pair(vertex.first, neighbour)] << "];" << std::endl;
         }
     }
     out << "}" << std::endl;

@@ -1,10 +1,10 @@
 digraph visual{
-Five->One;
-Four->Zero;
-One->Zero;
-Three->Four;
-Two->Five;
-Two->One;
-Zero->Three;
-Zero->Two;
+Five->One[weight=100];
+Four->Zero[weight=72];
+One->Zero[weight=10];
+Three->Four[weight=19];
+Two->Five[weight=31];
+Two->One[weight=41];
+Zero->Three[weight=15];
+Zero->Two[weight=11];
 }
