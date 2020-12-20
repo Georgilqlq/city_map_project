@@ -1,7 +1,9 @@
 digraph visual{
+Five->One;
 Four->Zero;
 One->Zero;
 Three->Four;
+Two->Five;
 Two->One;
 Zero->Three;
 Zero->Two;

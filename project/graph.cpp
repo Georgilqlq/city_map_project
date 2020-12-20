@@ -25,42 +25,8 @@ void Graph::add_edge(const std::string &from_vertex, const std::string &to_verte
     vertex_point.insert(from_vertex);
     vertex_point.insert(to_vertex);
     vertices[from_vertex].insert(to_vertex);
+    vertices[to_vertex];
     edge_weigh[std::make_pair(from_vertex, to_vertex)] = value;
-}
-
-bool Graph::is_it_reachable(const std::string &from_vertex, const std::string &to_vertex)
-{
-    if (!has_vertex(from_vertex) || !has_vertex(to_vertex))
-    {
-        throw std::invalid_argument("Invalid vertices!");
-    }
-
-    if (from_vertex == to_vertex)
-    {
-        return true;
-    }
-
-    std::map<std::string, bool> visited_vertices;
-    create_visited_vertices(visited_vertices);
-
-    std::stack<std::string> path;
-
-    visited_vertices[from_vertex] = true;
-    path.push(from_vertex);
-
-    std::string current_vertex;
-    while (!path.empty())
-    {
-        current_vertex = path.top();
-        path.pop();
-
-        if (searching_through_neighbours(current_vertex, visited_vertices, path, to_vertex))
-        {
-            return true;
-        }
-    }
-
-    return false;
 }
 
 bool Graph::is_it_reachable(const std::string &from_vertex, const std::string &to_vertex, const std::set<std::string> &closed_vertices)
@@ -80,7 +46,7 @@ bool Graph::is_it_reachable(const std::string &from_vertex, const std::string &t
         return false;
     }
 
-    std::map<std::string, bool> visited_vertices;
+    VisitedTable visited_vertices;
     create_closed_vertices(visited_vertices, closed_vertices);
 
     std::stack<std::string> path;
@@ -103,44 +69,6 @@ bool Graph::is_it_reachable(const std::string &from_vertex, const std::string &t
     return false;
 }
 
-void Graph::find_all_paths(const std::string &from_vertex, const std::string &to_vertex)
-{
-    if (!has_vertex(from_vertex) || !has_vertex(to_vertex))
-    {
-        throw std::invalid_argument("Invalid vertices!");
-    }
-
-    if (is_it_reachable(from_vertex, to_vertex) == false)
-    {
-        std::cout << to_vertex << " can't be reached from " << from_vertex << std::endl;
-        return;
-    }
-
-    std::list<std::vector<std::string>> paths;
-    std::map<std::string, bool> visited_vertices;
-    create_visited_vertices(visited_vertices);
-
-    std::vector<std::string> current_path;
-
-    find_all_paths_helper(from_vertex, to_vertex, visited_vertices, paths, current_path);
-
-    unsigned int min_weight;
-    std::vector<std::string> min_path;
-    for (size_t i = 0; i < 3 && !paths.empty(); i++)
-    {
-        min_weight = UINT_MAX;
-        min_path.clear();
-        find_min_path(paths, min_weight, min_path);
-
-        for (auto element : min_path)
-        {
-            std::cout << " -> " << element;
-        }
-        std::cout << " :" << min_weight << std::endl;
-        paths.remove(min_path);
-    }
-}
-
 void Graph::find_all_paths(const std::string &from_vertex, const std::string &to_vertex, const std::set<std::string> &closed_vertices)
 {
     if (!has_vertex(from_vertex) || !has_vertex(to_vertex))
@@ -153,8 +81,8 @@ void Graph::find_all_paths(const std::string &from_vertex, const std::string &to
         return;
     }
 
-    std::list<std::vector<std::string>> paths;
-    std::map<std::string, bool> visited_vertices;
+    ListOfPaths paths;
+    VisitedTable visited_vertices;
     std::vector<std::string> current_path;
 
     create_closed_vertices(visited_vertices, closed_vertices);
@@ -178,7 +106,7 @@ void Graph::find_all_paths(const std::string &from_vertex, const std::string &to
         paths.remove(min_path);
     }
 }
-void Graph::find_all_paths_helper(const std::string &from_vertex, const std::string &to_vertex, std::map<std::string, bool> &visited_vertices, std::list<std::vector<std::string>> &paths, std::vector<std::string> &current_path)
+void Graph::find_all_paths_helper(const std::string &from_vertex, const std::string &to_vertex, VisitedTable &visited_vertices, ListOfPaths &paths, std::vector<std::string> &current_path)
 {
     visited_vertices[from_vertex] = true;
     current_path.push_back(from_vertex);
@@ -237,7 +165,7 @@ bool Graph::mini_tour_and_return(const std::string &from_vertex)
         throw std::invalid_argument("Invalid vertex!");
     }
 
-    std::map<std::string, bool> visited_vertices;
+    VisitedTable visited_vertices;
     create_visited_vertices(visited_vertices);
     std::stack<std::string> path;
 
@@ -314,7 +242,7 @@ bool Graph::has_edge(const std::string &first_vertex, const std::string &second_
     return has_vertex(first_vertex) && vertices[first_vertex].count(second_vertex) == 1;
 }
 
-bool Graph::searching_through_neighbours(const std::string &current_vertex, std::map<std::string, bool> &visited_vertices, std::stack<std::string> &path, const std::string &to_vertex)
+bool Graph::searching_through_neighbours(const std::string &current_vertex, VisitedTable &visited_vertices, std::stack<std::string> &path, const std::string &to_vertex)
 {
     for (auto neighbour : vertices[current_vertex])
     {
@@ -332,7 +260,7 @@ bool Graph::searching_through_neighbours(const std::string &current_vertex, std:
     return false;
 }
 
-void Graph::create_visited_vertices(std::map<std::string, bool> &visited_vertices)
+void Graph::create_visited_vertices(VisitedTable &visited_vertices)
 {
     for (auto vertex : vertices)
     {
@@ -340,7 +268,7 @@ void Graph::create_visited_vertices(std::map<std::string, bool> &visited_vertice
     }
 }
 
-void Graph::find_min_path(std::list<std::vector<std::string>> &paths, unsigned int &min_weight, std::vector<std::string> &min_path)
+void Graph::find_min_path(ListOfPaths &paths, unsigned int &min_weight, std::vector<std::string> &min_path)
 {
     for (auto vector : paths)
     {
@@ -365,7 +293,7 @@ void Graph::print_all_dead_ends(const std::string &dead_end_vertex)
     {
         if (search_vertices.second.count(dead_end_vertex) == 1)
         {
-            std::cout << search_vertices.first << " - " << dead_end_vertex << std::endl;
+            std::cout << "[ " << search_vertices.first << " - " << dead_end_vertex << " ]" << std::endl;
         }
     }
 }
@@ -414,7 +342,7 @@ void Graph::load_from_file(const std::string &file_name)
     }
 }
 
-void Graph::create_closed_vertices(std::map<std::string, bool> &visited_vertices, const std::set<std::string> &closed_vertices)
+void Graph::create_closed_vertices(VisitedTable &visited_vertices, const std::set<std::string> &closed_vertices)
 {
     for (auto vertex : vertices)
     {

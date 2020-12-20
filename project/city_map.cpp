@@ -30,7 +30,6 @@ void City_map::location()
     }
     else
     {
-        std::cout << "!!!! I WAS CALLED !!!!" << std::endl;
         std::cout << "Current location is: " << current_location << std::endl;
     }
 }
@@ -50,7 +49,14 @@ void City_map::change(const std::string &new_location)
 
 void City_map::neighbours()
 {
-    map.print_neighbours(current_location);
+    try
+    {
+        map.print_neighbours(current_location);
+    }
+    catch (const std::invalid_argument &e)
+    {
+        std::cerr << e.what() << '\n';
+    }
 }
 
 void City_map::move(const std::string &new_location)
@@ -122,7 +128,9 @@ void City_map::user_interface()
     {
         clear_screen();
         std::cin.clear();
+        std::cout << ">";
         std::getline(std::cin, input);
+        std::cout << "-----------" << std::endl;
         if (input == "location")
         {
             location();
@@ -149,6 +157,7 @@ void City_map::user_interface()
         }
         else if (input == "mini tour")
         {
+
             mini_tour();
         }
         else if (input == "reach all")
@@ -215,25 +224,41 @@ void City_map::dead_ends()
 
 void City_map::mini_tour()
 {
-    if (map.mini_tour_and_return(current_location))
+    try
     {
-        std::cout << "Yes you will be able to return after a mini tour of the city." << std::endl;
+
+        if (map.mini_tour_and_return(current_location))
+        {
+            std::cout << "Yes you will be able to return after a mini tour of the city." << std::endl;
+        }
+        else
+        {
+            std::cout << "No you won't be able to return after a mini tour of the city." << std::endl;
+        }
     }
-    else
+    catch (const std::invalid_argument &e)
     {
-        std::cout << "No you won't be able to return after a mini tour of the city." << std::endl;
+        std::cerr << e.what() << '\n';
     }
 }
 
 void City_map::reach_all()
 {
-    if (map.can_reach_all_vertices(current_location))
+    try
     {
-        std::cout << "You can reach all intersections from here." << std::endl;
+
+        if (map.can_reach_all_vertices(current_location))
+        {
+            std::cout << "You can reach all intersections from here." << std::endl;
+        }
+        else
+        {
+            std::cout << "You can't reach all intersections from here." << std::endl;
+        }
     }
-    else
+    catch (const std::invalid_argument &e)
     {
-        std::cout << "You can't reach all intersections from here." << std::endl;
+        std::cerr << e.what() << '\n';
     }
 }
 
