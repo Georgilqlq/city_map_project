@@ -73,4 +73,18 @@ int main()
     // test_map.move("Zero");
 
     test_map.user_interface();
+
+    // Graph euler_test;
+    // euler_test.add_vertex("1");
+    // euler_test.add_vertex("2");
+    // euler_test.add_vertex("3");
+    // euler_test.add_vertex("4");
+
+    // euler_test.add_edge("1", "2", 1);
+    // euler_test.add_edge("2", "3", 2);
+    // euler_test.add_edge("3", "1", 3);
+    // euler_test.add_edge("1", "4", 4);
+    // euler_test.add_edge("4", "2", 4);
+
+    // euler_test.start_euler_tour("1");
 }

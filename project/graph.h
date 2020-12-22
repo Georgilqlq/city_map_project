@@ -35,6 +35,7 @@ public:
     void print_neighbours(const std::string &);
     void load_from_file(const std::string &);
     void visualise(std::ostream &);
+    void euler_tour(const std::string &, std::vector<std::string> &, std::map<std::string, std::set<std::string>> &);
 
 private:
     void find_all_paths_helper(const std::string &, const std::string &, VisitedTable &, ListOfPaths &, std::vector<std::string> &);
@@ -45,5 +46,7 @@ private:
     void print_all_dead_ends(const std::string &);
     void delete_graph();
     void create_closed_vertices(VisitedTable &, const std::set<std::string> &);
+
+    bool is_valid_path(std::vector<std::string> &);
 };
 #endif

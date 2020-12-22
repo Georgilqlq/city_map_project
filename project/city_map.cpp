@@ -18,7 +18,11 @@ void City_map::load(const std::string &file_name)
     }
     catch (const std::invalid_argument &e)
     {
-        std::cerr << e.what() << '\n';
+        std::cerr << e.what() << std::endl;
+    }
+    catch (const std::overflow_error &e)
+    {
+        std::cerr << e.what() << std::endl;
     }
 }
 
@@ -112,7 +116,6 @@ void City_map::tour()
     try
     {
         map.start_euler_tour(current_location);
-        map.load_from_file("input.txt");
     }
     catch (const std::invalid_argument &e)
     {

@@ -3,6 +3,8 @@
 #include <limits>
 #include <fstream>
 #include <sstream>
+#include <math.h>
+#include <algorithm>
 
 Graph::~Graph()
 {
@@ -193,43 +195,23 @@ void Graph::start_euler_tour(const std::string &starting_vertex)
         throw std::invalid_argument("Invalid vertex!");
     }
 
-    std::map<std::string, unsigned int> edges_per_vertex;
+    std::map<std::string, std::set<std::string>> vertices_copy = vertices;
+    std::vector<std::string> path;
+    euler_tour(starting_vertex, path, vertices_copy);
 
-    for (auto vertex : vertices)
+    if (is_valid_path(path))
     {
-        edges_per_vertex[vertex.first] = vertex.second.size();
-    }
-
-    std::stack<std::string> current_path;
-    std::vector<std::string> cycle;
-
-    current_path.push(starting_vertex);
-    std::string current_vertex = starting_vertex;
-    while (!current_path.empty())
-    {
-        if (edges_per_vertex[current_vertex])
+        std::cout << "[ ";
+        for (std::vector<std::string>::reverse_iterator note = path.rbegin(); note != path.rend() - 1; ++note)
         {
-            current_path.push(current_vertex);
-            std::string next_vertex = *vertices[current_vertex].rbegin();
-
-            edges_per_vertex[current_vertex]--;
-            vertices[current_vertex].erase(next_vertex);
-
-            current_vertex = next_vertex;
+            std::cout << *note << " -> ";
         }
-        else
-        {
-            cycle.push_back(current_vertex);
-
-            current_vertex = current_path.top();
-            current_path.pop();
-        }
+        std::cout << path[0] << " ]" << std::endl;
     }
-    for (auto element = cycle.rbegin(); element != cycle.rend(); ++element)
+    else
     {
-        std::cout << *element << " - > ";
+        std::cout << "You cannot make a full tour of the city from here: " << starting_vertex << std::endl;
     }
-    std::cout << starting_vertex << std::endl;
 }
 
 bool Graph::has_vertex(const std::string &vertex_name)
@@ -337,6 +319,10 @@ void Graph::load_from_file(const std::string &file_name)
         add_vertex(vertex_name);
         while (stream_line >> neighbour_name >> weight)
         {
+            if (weight < 0)
+            {
+                throw std::overflow_error("Cannot assign a negative weight!");
+            }
             add_edge(vertex_name, neighbour_name, weight);
         }
     }
@@ -369,4 +355,27 @@ void Graph::visualise(std::ostream &out)
         }
     }
     out << "}" << std::endl;
+}
+
+void Graph::euler_tour(const std::string &from_vertex, std::vector<std::string> &path, std::map<std::string, std::set<std::string>> &vertices_copy)
+{
+    while (vertices_copy[from_vertex].size() != 0)
+    {
+        std::string next_vertex = *vertices_copy[from_vertex].rbegin();
+        vertices_copy[from_vertex].erase(next_vertex);
+        euler_tour(next_vertex, path, vertices_copy);
+    }
+    path.push_back(from_vertex);
+}
+
+bool Graph::is_valid_path(std::vector<std::string> &path)
+{
+    for (std::vector<std::string>::reverse_iterator note = path.rbegin(); note != path.rend() - 1; ++note)
+    {
+        if (!has_edge(*note, *(note + 1)))
+        {
+            return false;
+        }
+    }
+    return true;
 }
