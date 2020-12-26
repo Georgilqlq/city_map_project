@@ -9,7 +9,7 @@ private:
     std::set<std::string> closed_locations;
 
 public:
-    void load(const std::string &);
+    void load();
     void location();
     void change(const std::string &);
     void neighbours();
@@ -27,4 +27,5 @@ public:
 private:
     void extract_words(std::string &, std::string &, std::string &);
     void menu();
+    void initial_location();
 };

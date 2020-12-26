@@ -48,5 +48,6 @@ private:
     void create_closed_vertices(VisitedTable &, const std::set<std::string> &);
 
     bool is_valid_path(std::vector<std::string> &);
+    bool dfs_search(const std::string &, const std::string &, VisitedTable &);
 };
 #endif

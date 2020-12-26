@@ -8,22 +8,36 @@ void clear_screen()
     std::cout << std::string(3, '\n');
 }
 
-void City_map::load(const std::string &file_name)
+void City_map::load()
 {
-    try
+    std::string input;
+    do
     {
-        current_location.clear();
-        closed_locations.clear();
-        map.load_from_file(file_name);
-    }
-    catch (const std::invalid_argument &e)
-    {
-        std::cerr << e.what() << std::endl;
-    }
-    catch (const std::overflow_error &e)
-    {
-        std::cerr << e.what() << std::endl;
-    }
+        clear_screen();
+        std::cin.clear();
+        std::cout << "Enter the input txt file." << std::endl;
+        std::cout << ">";
+        std::getline(std::cin, input);
+        std::cout << "-----------" << std::endl;
+
+        try
+        {
+            current_location.clear();
+            closed_locations.clear();
+            map.load_from_file(input);
+            std::cout << "File loaded successfully." << std::endl;
+            break;
+        }
+        catch (const std::invalid_argument &e)
+        {
+            std::cerr << e.what() << std::endl;
+        }
+        catch (const std::overflow_error &e)
+        {
+            std::cerr << e.what() << std::endl;
+            exit(1);
+        }
+    } while (true);
 }
 
 void City_map::location()
@@ -49,6 +63,31 @@ void City_map::change(const std::string &new_location)
     {
         std::cout << "Invalid location!" << std::endl;
     }
+}
+
+void City_map::initial_location()
+{
+    std::string input;
+    do
+    {
+        clear_screen();
+        std::cout << "Enter the starting location" << std::endl;
+        std::cin.clear();
+        std::cout << ">";
+        std::getline(std::cin, input);
+        std::cout << "-----------" << std::endl;
+
+        if (map.has_vertex(input))
+        {
+            current_location = input;
+            std::cout << "Location changed to: " << current_location << std::endl;
+            break;
+        }
+        else
+        {
+            std::cout << "Invalid location! Please try again!" << std::endl;
+        }
+    } while (true);
 }
 
 void City_map::neighbours()
@@ -125,6 +164,8 @@ void City_map::tour()
 
 void City_map::user_interface()
 {
+    load();
+    initial_location();
     std::string input, command, value;
     menu();
     do

@@ -50,25 +50,26 @@ bool Graph::is_it_reachable(const std::string &from_vertex, const std::string &t
 
     VisitedTable visited_vertices;
     create_closed_vertices(visited_vertices, closed_vertices);
-
-    std::stack<std::string> path;
-
     visited_vertices[from_vertex] = true;
-    path.push(from_vertex);
 
-    std::string current_vertex;
-    while (!path.empty())
-    {
-        current_vertex = path.top();
-        path.pop();
+    // std::stack<std::string> path;
 
-        if (searching_through_neighbours(current_vertex, visited_vertices, path, to_vertex))
-        {
-            return true;
-        }
-    }
+    // path.push(from_vertex);
 
-    return false;
+    // std::string current_vertex;
+    // while (!path.empty())
+    // {
+    //     current_vertex = path.top();
+    //     path.pop();
+
+    //     if (searching_through_neighbours(current_vertex, visited_vertices, path, to_vertex))
+    //     {
+    //         return true;
+    //     }
+    // }
+
+    // return false;
+    return dfs_search(from_vertex, to_vertex, visited_vertices);
 }
 
 void Graph::find_all_paths(const std::string &from_vertex, const std::string &to_vertex, const std::set<std::string> &closed_vertices)
@@ -169,23 +170,24 @@ bool Graph::mini_tour_and_return(const std::string &from_vertex)
 
     VisitedTable visited_vertices;
     create_visited_vertices(visited_vertices);
-    std::stack<std::string> path;
+    // std::stack<std::string> path;
 
-    path.push(from_vertex);
+    // path.push(from_vertex);
 
-    std::string current_vertex;
-    while (!path.empty())
-    {
-        current_vertex = path.top();
-        path.pop();
+    // std::string current_vertex;
+    // while (!path.empty())
+    // {
+    //     current_vertex = path.top();
+    //     path.pop();
 
-        if (searching_through_neighbours(current_vertex, visited_vertices, path, from_vertex))
-        {
-            return true;
-        }
-    }
+    //     if (searching_through_neighbours(current_vertex, visited_vertices, path, from_vertex))
+    //     {
+    //         return true;
+    //     }
+    // }
 
-    return false;
+    // return false;
+    return dfs_search(from_vertex, from_vertex, visited_vertices);
 }
 
 void Graph::start_euler_tour(const std::string &starting_vertex)
@@ -378,4 +380,25 @@ bool Graph::is_valid_path(std::vector<std::string> &path)
         }
     }
     return true;
+}
+
+bool Graph::dfs_search(const std::string &from_vertex, const std::string &end_vertex, VisitedTable &visited_vertices)
+{
+    std::stack<std::string> path;
+
+    path.push(from_vertex);
+
+    std::string current_vertex;
+    while (!path.empty())
+    {
+        current_vertex = path.top();
+        path.pop();
+
+        if (searching_through_neighbours(current_vertex, visited_vertices, path, end_vertex))
+        {
+            return true;
+        }
+    }
+
+    return false;
 }

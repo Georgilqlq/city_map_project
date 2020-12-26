@@ -57,7 +57,6 @@ int main()
     // third_test.start_euler_tour("One");
 
     City_map test_map;
-    test_map.load("input.txt");
 
     // test_map.change("Zero");
     // test_map.location();
