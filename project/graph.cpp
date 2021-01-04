@@ -52,36 +52,20 @@ bool Graph::is_it_reachable(const std::string &from_vertex, const std::string &t
     create_closed_vertices(visited_vertices, closed_vertices);
     visited_vertices[from_vertex] = true;
 
-    // std::stack<std::string> path;
-
-    // path.push(from_vertex);
-
-    // std::string current_vertex;
-    // while (!path.empty())
-    // {
-    //     current_vertex = path.top();
-    //     path.pop();
-
-    //     if (searching_through_neighbours(current_vertex, visited_vertices, path, to_vertex))
-    //     {
-    //         return true;
-    //     }
-    // }
-
-    // return false;
     return dfs_search(from_vertex, to_vertex, visited_vertices);
 }
 
-void Graph::find_all_paths(const std::string &from_vertex, const std::string &to_vertex, const std::set<std::string> &closed_vertices)
+std::map<std::vector<std::string>, unsigned int> Graph::find_all_paths(const std::string &from_vertex, const std::string &to_vertex, const std::set<std::string> &closed_vertices)
 {
     if (!has_vertex(from_vertex) || !has_vertex(to_vertex))
     {
         throw std::invalid_argument("Invalid vertices!");
     }
 
+    std::map<std::vector<std::string>, unsigned int> three_shortest_paths;
     if (is_it_reachable(from_vertex, to_vertex) == false)
     {
-        return;
+        return three_shortest_paths;
     }
 
     ListOfPaths paths;
@@ -101,13 +85,11 @@ void Graph::find_all_paths(const std::string &from_vertex, const std::string &to
 
         find_min_path(paths, min_weight, min_path);
 
-        for (auto element : min_path)
-        {
-            std::cout << " -> " << element;
-        }
-        std::cout << " :" << min_weight << std::endl;
+        three_shortest_paths[min_path] = min_weight;
+        
         paths.remove(min_path);
     }
+    return three_shortest_paths;
 }
 void Graph::find_all_paths_helper(const std::string &from_vertex, const std::string &to_vertex, VisitedTable &visited_vertices, ListOfPaths &paths, std::vector<std::string> &current_path)
 {
@@ -150,15 +132,18 @@ bool Graph::can_reach_all_vertices(const std::string &from_vertex)
     return true;
 }
 
-void Graph::find_all_dead_ends()
+std::map<std::string, std::set<std::string>> Graph::find_all_dead_ends()
 {
+    std::map<std::string, std::set<std::string>> dead_ends;
     for (auto vertex : vertices)
     {
         if (vertex.second.empty())
         {
-            print_all_dead_ends(vertex.first);
+            dead_ends[vertex.first] = print_all_dead_ends(vertex.first);
         }
     }
+
+    return dead_ends;
 }
 
 bool Graph::mini_tour_and_return(const std::string &from_vertex)
@@ -170,27 +155,11 @@ bool Graph::mini_tour_and_return(const std::string &from_vertex)
 
     VisitedTable visited_vertices;
     create_visited_vertices(visited_vertices);
-    // std::stack<std::string> path;
 
-    // path.push(from_vertex);
-
-    // std::string current_vertex;
-    // while (!path.empty())
-    // {
-    //     current_vertex = path.top();
-    //     path.pop();
-
-    //     if (searching_through_neighbours(current_vertex, visited_vertices, path, from_vertex))
-    //     {
-    //         return true;
-    //     }
-    // }
-
-    // return false;
     return dfs_search(from_vertex, from_vertex, visited_vertices);
 }
 
-void Graph::start_euler_tour(const std::string &starting_vertex)
+std::vector<std::string> Graph::start_euler_tour(const std::string &starting_vertex)
 {
     if (!has_vertex(starting_vertex))
     {
@@ -201,19 +170,7 @@ void Graph::start_euler_tour(const std::string &starting_vertex)
     std::vector<std::string> path;
     euler_tour(starting_vertex, path, vertices_copy);
 
-    if (is_valid_path(path))
-    {
-        std::cout << "[ ";
-        for (std::vector<std::string>::reverse_iterator note = path.rbegin(); note != path.rend() - 1; ++note)
-        {
-            std::cout << *note << " -> ";
-        }
-        std::cout << path[0] << " ]" << std::endl;
-    }
-    else
-    {
-        std::cout << "You cannot make a full tour of the city from here: " << starting_vertex << std::endl;
-    }
+    return path;
 }
 
 bool Graph::has_vertex(const std::string &vertex_name)
@@ -271,15 +228,18 @@ void Graph::find_min_path(ListOfPaths &paths, unsigned int &min_weight, std::vec
     }
 }
 
-void Graph::print_all_dead_ends(const std::string &dead_end_vertex)
+std::set<std::string> Graph::print_all_dead_ends(const std::string &dead_end_vertex)
 {
+    std::set<std::string> dead_end_starts;
     for (auto search_vertices : vertices)
     {
         if (search_vertices.second.count(dead_end_vertex) == 1)
         {
-            std::cout << "[ " << search_vertices.first << " - " << dead_end_vertex << " ]" << std::endl;
+            dead_end_starts.insert(search_vertices.first);
         }
     }
+
+    return dead_end_starts;
 }
 
 void Graph::delete_graph()
@@ -289,19 +249,14 @@ void Graph::delete_graph()
     edge_weigh.clear();
 }
 
-void Graph::print_neighbours(const std::string &current_vertex)
+std::set<std::string> Graph::get_neighbours(const std::string &current_vertex)
 {
     if (!has_vertex(current_vertex))
     {
         throw std::invalid_argument("The vertex doesn't exist!");
     }
 
-    std::cout << "[ ";
-    for (auto neighbour : vertices[current_vertex])
-    {
-        std::cout << neighbour << " ";
-    }
-    std::cout << "]" << std::endl;
+    return vertices[current_vertex];
 }
 
 void Graph::load_from_file(const std::string &file_name)

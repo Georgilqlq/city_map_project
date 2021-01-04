@@ -1,12 +1,12 @@
 #include "graph.h"
+#include "CrossRoad.h"
 #include <string>
 
 class City_map
 {
 private:
     Graph map;
-    std::string current_location;
-    std::set<std::string> closed_locations;
+    CrossRoad locations;
 
 public:
     void load();

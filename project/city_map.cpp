@@ -22,8 +22,7 @@ void City_map::load()
 
         try
         {
-            current_location.clear();
-            closed_locations.clear();
+            locations.clear();
             map.load_from_file(input);
             std::cout << "File loaded successfully." << std::endl;
             break;
@@ -42,13 +41,13 @@ void City_map::load()
 
 void City_map::location()
 {
-    if (current_location.empty())
+    if (locations.get_location().empty())
     {
         std::cout << "You haven't set the current location yet." << std::endl;
     }
     else
     {
-        std::cout << "Current location is: " << current_location << std::endl;
+        std::cout << "Current location is: " << locations.get_location() << std::endl;
     }
 }
 
@@ -56,8 +55,8 @@ void City_map::change(const std::string &new_location)
 {
     if (map.has_vertex(new_location))
     {
-        current_location = new_location;
-        std::cout << "Location changed to: " << current_location << std::endl;
+        locations.change_location(new_location);
+        std::cout << "Location changed to: " << locations.get_location() << std::endl;
     }
     else
     {
@@ -79,8 +78,8 @@ void City_map::initial_location()
 
         if (map.has_vertex(input))
         {
-            current_location = input;
-            std::cout << "Location changed to: " << current_location << std::endl;
+            locations.change_location(input);
+            std::cout << "Location changed to: " << locations.get_location() << std::endl;
             break;
         }
         else
@@ -94,7 +93,13 @@ void City_map::neighbours()
 {
     try
     {
-        map.print_neighbours(current_location);
+        std::set<std::string> vertex_for_print = map.get_neighbours(locations.get_location());
+        std::cout << "[ ";
+        for (auto neighbour : vertex_for_print)
+        {
+            std::cout << neighbour << " ";
+        }
+        std::cout << "]" << std::endl;
     }
     catch (const std::invalid_argument &e)
     {
@@ -106,14 +111,23 @@ void City_map::move(const std::string &new_location)
 {
     try
     {
-        if (map.is_it_reachable(current_location, new_location, closed_locations))
+        if (map.is_it_reachable(locations.get_location(), new_location, locations.get_closed_locations()))
         {
-            map.find_all_paths(current_location, new_location, closed_locations);
+            std::map<std::vector<std::string>, unsigned int> three_shortest_paths = map.find_all_paths(locations.get_location(), new_location, locations.get_closed_locations());
+
+            for (auto path : three_shortest_paths)
+            {
+                for (auto visited_vertex : path.first)
+                {
+                    std::cout << " -> " << visited_vertex;
+                }
+                std::cout << ": " << path.second << std::endl;
+            }
             change(new_location);
         }
         else
         {
-            std::cout << new_location << " can't be reached from " << current_location << "." << std::endl;
+            std::cout << new_location << " can't be reached from " << locations.get_location() << "." << std::endl;
         }
     }
     catch (const std::invalid_argument &e)
@@ -126,7 +140,7 @@ void City_map::close(const std::string &closed_location)
 {
     if (map.has_vertex(closed_location))
     {
-        closed_locations.insert(closed_location);
+        locations.close_location(closed_location);
         std::cout << "[ " << closed_location << " ] has been closed." << std::endl;
     }
     else
@@ -137,13 +151,13 @@ void City_map::close(const std::string &closed_location)
 
 void City_map::open(const std::string &opened_location)
 {
-    closed_locations.erase(opened_location);
+    locations.open_location(opened_location);
 }
 
 void City_map::closed()
 {
     std::cout << "[ ";
-    for (auto location : closed_locations)
+    for (auto location : locations.get_closed_locations())
     {
         std::cout << location << " ";
     }
@@ -154,7 +168,20 @@ void City_map::tour()
 {
     try
     {
-        map.start_euler_tour(current_location);
+        std::vector<std::string> path = map.start_euler_tour(locations.get_location());
+        if (map.is_valid_path(path))
+        {
+            std::cout << "[ ";
+            for (std::vector<std::string>::reverse_iterator note = path.rbegin(); note != path.rend() - 1; ++note)
+            {
+                std::cout << *note << " -> ";
+            }
+            std::cout << path[0] << " ]" << std::endl;
+        }
+        else
+        {
+            std::cout << "You cannot make a full tour of the city from here: " << locations.get_location() << std::endl;
+        }
     }
     catch (const std::invalid_argument &e)
     {
@@ -263,7 +290,15 @@ void City_map::image()
 
 void City_map::dead_ends()
 {
-    map.find_all_dead_ends();
+    std::map<std::string, std::set<std::string>> dead_ends = map.find_all_dead_ends();
+
+    for (auto end_street : dead_ends)
+    {
+        for (auto begin_street : end_street.second)
+        {
+            std::cout << "[ " << begin_street << " - " << end_street.first << " ]" << std::endl;
+        }
+    }
 }
 
 void City_map::mini_tour()
@@ -271,7 +306,7 @@ void City_map::mini_tour()
     try
     {
 
-        if (map.mini_tour_and_return(current_location))
+        if (map.mini_tour_and_return(locations.get_location()))
         {
             std::cout << "Yes you will be able to return after a mini tour of the city." << std::endl;
         }
@@ -291,7 +326,7 @@ void City_map::reach_all()
     try
     {
 
-        if (map.can_reach_all_vertices(current_location))
+        if (map.can_reach_all_vertices(locations.get_location()))
         {
             std::cout << "You can reach all intersections from here." << std::endl;
         }
