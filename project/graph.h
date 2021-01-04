@@ -35,11 +35,10 @@ public:
     std::set<std::string> get_neighbours(const std::string &);
     void load_from_file(const std::string &);
     void visualise(std::ostream &);
-    void euler_tour(const std::string &, std::vector<std::string> &, std::map<std::string, std::set<std::string>> &);
-
     bool is_valid_path(std::vector<std::string> &);
 
 private:
+    void euler_tour(const std::string &, std::vector<std::string> &, std::map<std::string, std::set<std::string>> &);
     void find_all_paths_helper(const std::string &, const std::string &, VisitedTable &, ListOfPaths &, std::vector<std::string> &);
     bool has_edge(const std::string &, const std::string &); // might not need
     bool searching_through_neighbours(const std::string &, VisitedTable &, std::stack<std::string> &, const std::string &);
