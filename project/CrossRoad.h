@@ -2,6 +2,8 @@
 #define CROSSROAD_HH
 #include <string>
 #include <set>
+
+///This is the class containing the closed location and the current location
 class CrossRoad
 {
 private:

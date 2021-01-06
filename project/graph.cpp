@@ -55,7 +55,7 @@ bool Graph::is_it_reachable(const std::string &from_vertex, const std::string &t
     return dfs_search(from_vertex, to_vertex, visited_vertices);
 }
 
-std::map<std::vector<std::string>, unsigned int> Graph::find_all_paths(const std::string &from_vertex, const std::string &to_vertex, const std::set<std::string> &closed_vertices)
+std::map<std::vector<std::string>, unsigned int> Graph::find_three_shortest_paths(const std::string &from_vertex, const std::string &to_vertex, const std::set<std::string> &closed_vertices)
 {
     if (!has_vertex(from_vertex) || !has_vertex(to_vertex))
     {
@@ -74,7 +74,7 @@ std::map<std::vector<std::string>, unsigned int> Graph::find_all_paths(const std
 
     create_closed_vertices(visited_vertices, closed_vertices);
 
-    find_all_paths_helper(from_vertex, to_vertex, visited_vertices, paths, current_path);
+    find_all_paths(from_vertex, to_vertex, visited_vertices, paths, current_path);
 
     unsigned int min_weight;
     std::vector<std::string> min_path;
@@ -86,12 +86,12 @@ std::map<std::vector<std::string>, unsigned int> Graph::find_all_paths(const std
         find_min_path(paths, min_weight, min_path);
 
         three_shortest_paths[min_path] = min_weight;
-        
+
         paths.remove(min_path);
     }
     return three_shortest_paths;
 }
-void Graph::find_all_paths_helper(const std::string &from_vertex, const std::string &to_vertex, VisitedTable &visited_vertices, ListOfPaths &paths, std::vector<std::string> &current_path)
+void Graph::find_all_paths(const std::string &from_vertex, const std::string &to_vertex, VisitedTable &visited_vertices, ListOfPaths &paths, std::vector<std::string> &current_path)
 {
     visited_vertices[from_vertex] = true;
     current_path.push_back(from_vertex);
@@ -106,7 +106,7 @@ void Graph::find_all_paths_helper(const std::string &from_vertex, const std::str
         {
             if (visited_vertices[neighbour] == false)
             {
-                find_all_paths_helper(neighbour, to_vertex, visited_vertices, paths, current_path);
+                find_all_paths(neighbour, to_vertex, visited_vertices, paths, current_path);
             }
         }
     }
@@ -168,7 +168,7 @@ std::vector<std::string> Graph::start_euler_tour(const std::string &starting_ver
 
     std::map<std::string, std::set<std::string>> vertices_copy = vertices;
     std::vector<std::string> path;
-    euler_tour(starting_vertex, path, vertices_copy);
+    find_euler_tour(starting_vertex, path, vertices_copy);
 
     return path;
 }
@@ -314,13 +314,13 @@ void Graph::visualise(std::ostream &out)
     out << "}" << std::endl;
 }
 
-void Graph::euler_tour(const std::string &from_vertex, std::vector<std::string> &path, std::map<std::string, std::set<std::string>> &vertices_copy)
+void Graph::find_euler_tour(const std::string &from_vertex, std::vector<std::string> &path, std::map<std::string, std::set<std::string>> &vertices_copy)
 {
     while (vertices_copy[from_vertex].size() != 0)
     {
         std::string next_vertex = *vertices_copy[from_vertex].rbegin();
         vertices_copy[from_vertex].erase(next_vertex);
-        euler_tour(next_vertex, path, vertices_copy);
+        find_euler_tour(next_vertex, path, vertices_copy);
     }
     path.push_back(from_vertex);
 }

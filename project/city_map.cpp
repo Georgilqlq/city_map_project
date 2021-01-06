@@ -113,7 +113,7 @@ void City_map::move(const std::string &new_location)
     {
         if (map.is_it_reachable(locations.get_location(), new_location, locations.get_closed_locations()))
         {
-            std::map<std::vector<std::string>, unsigned int> three_shortest_paths = map.find_all_paths(locations.get_location(), new_location, locations.get_closed_locations());
+            std::map<std::vector<std::string>, unsigned int> three_shortest_paths = map.find_three_shortest_paths(locations.get_location(), new_location, locations.get_closed_locations());
 
             for (auto path : three_shortest_paths)
             {

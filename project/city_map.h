@@ -2,6 +2,7 @@
 #include "CrossRoad.h"
 #include <string>
 
+///User interface class. Input/Output in the console.
 class City_map
 {
 private:
@@ -25,6 +26,7 @@ public:
     void reach_all();
 
 private:
+    ///Extracts the command and the value from the input
     void extract_words(std::string &, std::string &, std::string &);
     void menu();
     void initial_location();

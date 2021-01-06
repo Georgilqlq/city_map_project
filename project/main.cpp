@@ -30,7 +30,7 @@ int main()
 
     std::set<std::string> close_test;
     close_test.insert("4");
-    test_graph.find_all_paths("3", "2", close_test);
+    test_graph.find_three_shortest_paths("3", "2", close_test);
     // std::cout << test_graph.mini_tour_and_return("2") << std::endl;
 
     // Graph second_test;
