@@ -25,6 +25,7 @@ void City_map::load()
             locations.clear();
             map.load_from_file(input);
             std::cout << "File loaded successfully." << std::endl;
+            file_name = input;
             break;
         }
         catch (const std::invalid_argument &e)
@@ -194,7 +195,6 @@ void City_map::user_interface()
     load();
     initial_location();
     std::string input, command, value;
-    menu();
     do
     {
         clear_screen();
@@ -234,6 +234,10 @@ void City_map::user_interface()
         else if (input == "reach all")
         {
             reach_all();
+        }
+        else if (input == "reload")
+        {
+            reload();
         }
         else if (input.find("@") != std::string::npos)
         {
@@ -341,22 +345,89 @@ void City_map::reach_all()
     }
 }
 
-void City_map::menu()
+void City_map::menu1()
 {
-    std::cout << "Welcome to the City Map Menu" << std::endl
+    std::cout << "Welcome to the City Map Menu 1/2" << std::endl
               << "The functions that are currently available are: " << std::endl
               << std::endl
-              << "load @ <file name> - to load a map from a file" << std::endl
               << "location - tells you the current location" << std::endl
-              << "change @ <new location> - chane your current location to the new location" << std::endl
               << "neighbours - display all the neighbouring crossroads" << std::endl
-              << "move @ <new location> - move to a new location displaying the shortest paths" << std::endl
-              << "close @ <location> - close off a crossroad" << std::endl
-              << "open @ <location> - open a closed crossroad" << std::endl
               << "closed - display all the closed crossroads" << std::endl
               << "tour - display the Euler tour if one is possible" << std::endl
               << "image - display the map in the Graph.dot file" << std::endl
               << "dead ends - display all dead ends" << std::endl
               << "mini tour - see if you can return to your current location after a mini tour" << std::endl
-              << "reach all - see if you can reach all crossroads from your current location" << std::endl;
+              << "reach all - see if you can reach all crossroads from your current location" << std::endl
+              << "reload - reloads the city map from the initial file" << std::endl;
+}
+
+void City_map::menu2()
+{
+    std::cout << "Welcome to the City Map Menu 2/2" << std::endl
+              << "The functions that are currently available are: " << std::endl
+              << std::endl
+              << "load @ <file name> - to load a map from a file" << std::endl
+              << "change @ <new location> - chane your current location to the new location" << std::endl
+              << "move @ <new location> - move to a new location displaying the shortest paths" << std::endl
+              << "close @ <location> - close off a crossroad" << std::endl
+              << "open @ <location> - open a closed crossroad" << std::endl;
+}
+
+void City_map::startup()
+{
+    std::string input;
+    std::cout << "Welcome to the city map program! Please type one of the following: " << std::endl;
+    std::cout << "--i   to start the program " << std::endl;
+    std::cout << "--h1  for the menu without parameters" << std::endl;
+    std::cout << "--h2  for the menu with parameters" << std::endl;
+    std::cout << "exit  to quit the program" << std::endl;
+    do
+    {
+        clear_screen();
+        std::cin.clear();
+        std::cout << ">";
+        std::getline(std::cin, input);
+        std::cout << "-----------" << std::endl;
+
+        if (input == "--i")
+        {
+            user_interface();
+            break;
+        }
+        else if (input == "--h1")
+        {
+            menu1();
+        }
+        else if (input == "--h2")
+        {
+            menu2();
+        }
+        else if (input == "exit")
+        {
+            break;
+        }
+        else
+        {
+            std::cout << "Invalid command! Please try again!" << std::endl;
+        }
+    } while (true);
+}
+
+void City_map::reload()
+{
+    try
+    {
+        locations.clear();
+        map.load_from_file(file_name);
+        std::cout << "File loaded successfully." << std::endl;
+    }
+    catch (const std::invalid_argument &e)
+    {
+        std::cerr << e.what() << std::endl;
+    }
+    catch (const std::overflow_error &e)
+    {
+        std::cerr << e.what() << std::endl;
+        exit(1);
+    }
 }

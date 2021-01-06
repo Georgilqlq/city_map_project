@@ -8,8 +8,11 @@ class City_map
 private:
     Graph map;
     CrossRoad locations;
+    std::string file_name;
 
 public:
+    void user_interface();
+    void startup();
     void load();
     void location();
     void change(const std::string &);
@@ -19,7 +22,6 @@ public:
     void open(const std::string &);
     void closed();
     void tour();
-    void user_interface();
     void image();
     void dead_ends();
     void mini_tour();
@@ -28,6 +30,8 @@ public:
 private:
     ///Extracts the command and the value from the input
     void extract_words(std::string &, std::string &, std::string &);
-    void menu();
+    void menu1();
+    void menu2();
     void initial_location();
+    void reload();
 };
