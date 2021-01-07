@@ -27,7 +27,7 @@ TEST_CASE("finding path and dead ends + reading from file")
 {
     Graph basic_map("test_input.txt");
 
-    std::map<std::vector<std::string>, unsigned int> path_from_Two_to_One = basic_map.find_all_paths("Two", "One");
+    std::map<std::vector<std::string>, unsigned int> path_from_Two_to_One = basic_map.find_three_shortest_paths("Two", "One");
     std::vector<std::string> first_path{"Two", "Five", "One"};
     std::vector<std::string> second_path{"Two", "One"};
 

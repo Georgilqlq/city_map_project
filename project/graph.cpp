@@ -91,6 +91,7 @@ std::map<std::vector<std::string>, unsigned int> Graph::find_three_shortest_path
     }
     return three_shortest_paths;
 }
+
 void Graph::find_all_paths(const std::string &from_vertex, const std::string &to_vertex, VisitedTable &visited_vertices, ListOfPaths &paths, std::vector<std::string> &current_path)
 {
     visited_vertices[from_vertex] = true;
