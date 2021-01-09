@@ -21,7 +21,7 @@ tests.o: tests.cpp
 	g++ -c tests.cpp
 
 clean:
-	del tests.o graph.o CrossRoad.o city_map.o main.o output 
+	rm tests.o graph.o CrossRoad.o city_map.o main.o output
 
 run_tests:
 	./tests.exe
