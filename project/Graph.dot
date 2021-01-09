@@ -1,5 +1,4 @@
 digraph visual{
-Five->Six[weight=52];
 Four->Zero[weight=72];
 One->Zero[weight=10];
 Three->Four[weight=19];

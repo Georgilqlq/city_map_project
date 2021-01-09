@@ -268,6 +268,7 @@ void Graph::load_from_file(const std::string &file_name)
         throw std::invalid_argument("This file doesn't exist!");
     }
 
+    delete_graph();
     std::string vertex_name, neighbour_name, line;
     int weight;
     while (std::getline(graph_file, line))
