@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.18"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>City Map: Class Members - Functions</title>
+<title>City Map: C:/SDP/project/project/crossRoad.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -73,7 +73,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div>
 <script type="text/javascript">
 /* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
-$(document).ready(function(){initNavTree('functions_func.html',''); initResizable(); });
+$(document).ready(function(){initNavTree('cross_road_8h_source.html',''); initResizable(); });
 /* @license-end */
 </script>
 <div id="doc-content">
@@ -91,68 +91,39 @@ $(document).ready(function(){initNavTree('functions_func.html',''); initResizabl
 </iframe>
 </div>
 
+<div class="header">
+  <div class="headertitle">
+<div class="title">C:/SDP/project/project/crossRoad.h</div>  </div>
+</div><!--header-->
 <div class="contents">
-&#160;<ul>
-<li>can_reach_all_vertices()
-: <a class="el" href="class_graph.html#a1a049ec79c41cf4ffd0a6ee54063ea9f">Graph</a>
-</li>
-<li>create_closed_vertices()
-: <a class="el" href="class_graph.html#a9586c05b6faa705690e0f22bfa887e53">Graph</a>
-</li>
-<li>create_visited_vertices()
-: <a class="el" href="class_graph.html#aa2b39536ad172d888615fb28a26a4aa4">Graph</a>
-</li>
-<li>dfs_search()
-: <a class="el" href="class_graph.html#ad432b29890822a2aa224b437585fa4e7">Graph</a>
-</li>
-<li>extract_words()
-: <a class="el" href="class_city_map.html#a071ca7df3ad3cb2a002c8420a66dacc8">CityMap</a>
-</li>
-<li>find_all_dead_ends()
-: <a class="el" href="class_graph.html#a09478995d4411698d68ba8c455ae7d6f">Graph</a>
-</li>
-<li>find_all_paths()
-: <a class="el" href="class_graph.html#ab7bae0ff8b00b1ab179142fea9ba9c4f">Graph</a>
-</li>
-<li>find_euler_tour()
-: <a class="el" href="class_graph.html#ad9c1f78bd241e069a3298e2ee83c4b9b">Graph</a>
-</li>
-<li>find_min_path()
-: <a class="el" href="class_graph.html#a84d9e56f3af459ed6435515476b658fb">Graph</a>
-</li>
-<li>find_three_shortest_paths()
-: <a class="el" href="class_graph.html#ad43556aa5c8aa49399a8740a090cd85c">Graph</a>
-</li>
-<li>get_neighbours()
-: <a class="el" href="class_graph.html#a1159c05697afcd49890e84f88f030bd4">Graph</a>
-</li>
-<li>Graph()
-: <a class="el" href="class_graph.html#a5c98d6fb60c05da4bd408a693523e9b9">Graph</a>
-</li>
-<li>is_it_reachable()
-: <a class="el" href="class_graph.html#afe070c6678916384299aa0e71bccdf01">Graph</a>
-</li>
-<li>is_valid_path()
-: <a class="el" href="class_graph.html#a36370e49b91fbc03700ae6f723c62f68">Graph</a>
-</li>
-<li>mini_tour_and_return()
-: <a class="el" href="class_graph.html#a42ac8379cae5106e843ad3199097ff4c">Graph</a>
-</li>
-<li>searching_through_neighbours()
-: <a class="el" href="class_graph.html#a22cd60939314c140c1105fd991b82b71">Graph</a>
-</li>
-<li>start_euler_tour()
-: <a class="el" href="class_graph.html#a0b98117ed1b1dac63c438c2e068935f1">Graph</a>
-</li>
-<li>visualise()
-: <a class="el" href="class_graph.html#a499926adf35c1415e8aaaad13cf43813">Graph</a>
-</li>
-</ul>
-</div><!-- contents -->
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef CROSSROAD_HH</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define CROSSROAD_HH</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;set&gt;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
+<div class="line"><a name="l00007"></a><span class="lineno"><a class="line" href="class_cross_road.html">    7</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_cross_road.html">CrossRoad</a></div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;{</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;    std::string current_location;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;    std::set&lt;std::string&gt; closed_locations;</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160; </div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    <span class="keyword">const</span> std::string get_location() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;    <span class="keyword">const</span> std::set&lt;std::string&gt; get_closed_locations() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;    <span class="keywordtype">void</span> change_location(<span class="keyword">const</span> std::string &amp;);</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <span class="keywordtype">void</span> open_location(<span class="keyword">const</span> std::string &amp;);</div>
+<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    <span class="keywordtype">void</span> close_location(<span class="keyword">const</span> std::string &amp;);</div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;    <span class="keywordtype">void</span> clear();</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;};</div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="preprocessor">#endif</span></div>
+</div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
+<div class="ttc" id="aclass_cross_road_html"><div class="ttname"><a href="class_cross_road.html">CrossRoad</a></div><div class="ttdoc">This is the class containing the closed location and the current location.</div><div class="ttdef"><b>Definition:</b> crossRoad.h:8</div></div>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
+    <li class="navelem"><b>crossRoad.h</b></li>
     <li class="footer">Generated by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.18 </li>

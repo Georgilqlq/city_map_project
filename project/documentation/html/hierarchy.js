@@ -8,7 +8,7 @@ var hierarchy =
     [ "char_traits< charT >", "structchar__traits.html", null ],
     [ "doctest::detail::has_insertion_operator_impl::check< class, class >", "structdoctest_1_1detail_1_1has__insertion__operator__impl_1_1check.html", null ],
     [ "doctest::detail::has_insertion_operator_impl::check< T, decltype(os()<< val< T >(), void())>", "structdoctest_1_1detail_1_1has__insertion__operator__impl_1_1check_3_01_t_00_01decltype_07os_07_8d91d0ae55ab2b557e111ab3ba9c02da.html", null ],
-    [ "City_map", "class_city__map.html", null ],
+    [ "CityMap", "class_city_map.html", null ],
     [ "doctest::Context", "classdoctest_1_1_context.html", null ],
     [ "doctest::ContextOptions", "structdoctest_1_1_context_options.html", null ],
     [ "CrossRoad", "class_cross_road.html", null ],
