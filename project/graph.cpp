@@ -329,6 +329,11 @@ void Graph::find_euler_tour(const std::string &from_vertex, std::vector<std::str
 
 bool Graph::is_valid_path(std::vector<std::string> &path)
 {
+    if (path.size() < vertex_point.size())
+    {
+        return false;
+    }
+    
     for (std::vector<std::string>::reverse_iterator note = path.rbegin(); note != path.rend() - 1; ++note)
     {
         if (!has_edge(*note, *(note + 1)))
