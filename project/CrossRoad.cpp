@@ -4,7 +4,7 @@ const std::string CrossRoad::get_location() const
 {
     return current_location;
 }
-const std::set<std::string> CrossRoad::get_closed_locations()
+const std::set<std::string> CrossRoad::get_closed_locations() const
 {
     return closed_locations;
 }

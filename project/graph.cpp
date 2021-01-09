@@ -140,7 +140,7 @@ std::map<std::string, std::set<std::string>> Graph::find_all_dead_ends()
     {
         if (vertex.second.empty())
         {
-            dead_ends[vertex.first] = print_all_dead_ends(vertex.first);
+            dead_ends[vertex.first] = dead_ends_from_vertex(vertex.first);
         }
     }
 
@@ -229,7 +229,7 @@ void Graph::find_min_path(ListOfPaths &paths, unsigned int &min_weight, std::vec
     }
 }
 
-std::set<std::string> Graph::print_all_dead_ends(const std::string &dead_end_vertex)
+std::set<std::string> Graph::dead_ends_from_vertex(const std::string &dead_end_vertex)
 {
     std::set<std::string> dead_end_starts;
     for (auto search_vertices : vertices)

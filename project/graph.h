@@ -91,6 +91,6 @@ private:
     ///Searches through the graph if it's possible to reach one vertex from another.
     bool dfs_search(const std::string &, const std::string &, VisitedTable &);
 
-    std::set<std::string> print_all_dead_ends(const std::string &);
+    std::set<std::string> dead_ends_from_vertex(const std::string &);
 };
 #endif

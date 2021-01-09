@@ -12,7 +12,7 @@ private:
 
 public:
     const std::string get_location() const;
-    const std::set<std::string> get_closed_locations();
+    const std::set<std::string> get_closed_locations() const;
     void change_location(const std::string &);
     void open_location(const std::string &);
     void close_location(const std::string &);
