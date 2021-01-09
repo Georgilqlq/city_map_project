@@ -1,9 +1,9 @@
 #include "graph.h"
-#include "CrossRoad.h"
+#include "crossRoad.h"
 #include <string>
 
 ///User interface class. Input/Output in the console.
-class City_map
+class CityMap
 {
 private:
     Graph map;

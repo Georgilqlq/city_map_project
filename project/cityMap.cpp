@@ -1,4 +1,4 @@
-#include "city_map.h"
+#include "cityMap.h"
 #include <iostream>
 #include <sstream>
 #include <fstream>
@@ -8,7 +8,7 @@ void clear_screen()
     std::cout << std::string(3, '\n');
 }
 
-void City_map::load()
+void CityMap::load()
 {
     std::string input;
     do
@@ -40,7 +40,7 @@ void City_map::load()
     } while (true);
 }
 
-void City_map::location()
+void CityMap::location()
 {
     if (locations.get_location().empty())
     {
@@ -52,7 +52,7 @@ void City_map::location()
     }
 }
 
-void City_map::change(const std::string &new_location)
+void CityMap::change(const std::string &new_location)
 {
     if (map.has_vertex(new_location))
     {
@@ -65,7 +65,7 @@ void City_map::change(const std::string &new_location)
     }
 }
 
-void City_map::initial_location()
+void CityMap::initial_location()
 {
     std::string input;
     do
@@ -90,7 +90,7 @@ void City_map::initial_location()
     } while (true);
 }
 
-void City_map::neighbours()
+void CityMap::neighbours()
 {
     try
     {
@@ -108,7 +108,7 @@ void City_map::neighbours()
     }
 }
 
-void City_map::move(const std::string &new_location)
+void CityMap::move(const std::string &new_location)
 {
     try
     {
@@ -137,7 +137,7 @@ void City_map::move(const std::string &new_location)
     }
 }
 
-void City_map::close(const std::string &closed_location)
+void CityMap::close(const std::string &closed_location)
 {
     if (map.has_vertex(closed_location))
     {
@@ -150,12 +150,12 @@ void City_map::close(const std::string &closed_location)
     }
 }
 
-void City_map::open(const std::string &opened_location)
+void CityMap::open(const std::string &opened_location)
 {
     locations.open_location(opened_location);
 }
 
-void City_map::closed()
+void CityMap::closed()
 {
     std::cout << "[ ";
     for (auto location : locations.get_closed_locations())
@@ -165,7 +165,7 @@ void City_map::closed()
     std::cout << "]" << std::endl;
 }
 
-void City_map::tour()
+void CityMap::tour()
 {
     try
     {
@@ -190,7 +190,7 @@ void City_map::tour()
     }
 }
 
-void City_map::user_interface()
+void CityMap::user_interface()
 {
     load();
     initial_location();
@@ -274,7 +274,7 @@ void City_map::user_interface()
     } while (input != "exit" && input != "quit");
 }
 
-void City_map::extract_words(std::string &input, std::string &command, std::string &value)
+void CityMap::extract_words(std::string &input, std::string &command, std::string &value)
 {
     std::stringstream input_stream(input);
     std::string item;
@@ -285,14 +285,14 @@ void City_map::extract_words(std::string &input, std::string &command, std::stri
     }
 }
 
-void City_map::image()
+void CityMap::image()
 {
     std::ofstream output("Graph.dot");
     map.visualise(output);
     std::cout << "Open the Graph.dot file." << std::endl;
 }
 
-void City_map::dead_ends()
+void CityMap::dead_ends()
 {
     std::map<std::string, std::set<std::string>> dead_ends = map.find_all_dead_ends();
 
@@ -305,7 +305,7 @@ void City_map::dead_ends()
     }
 }
 
-void City_map::mini_tour()
+void CityMap::mini_tour()
 {
     try
     {
@@ -325,7 +325,7 @@ void City_map::mini_tour()
     }
 }
 
-void City_map::reach_all()
+void CityMap::reach_all()
 {
     try
     {
@@ -345,7 +345,7 @@ void City_map::reach_all()
     }
 }
 
-void City_map::menu1()
+void CityMap::menu1()
 {
     std::cout << "Welcome to the City Map Menu 1/2" << std::endl
               << "The functions that are currently available are: " << std::endl
@@ -361,7 +361,7 @@ void City_map::menu1()
               << "reload - reloads the city map from the initial file" << std::endl;
 }
 
-void City_map::menu2()
+void CityMap::menu2()
 {
     std::cout << "Welcome to the City Map Menu 2/2" << std::endl
               << "The functions that are currently available are: " << std::endl
@@ -373,7 +373,7 @@ void City_map::menu2()
               << "open @ <location> - open a closed crossroad" << std::endl;
 }
 
-void City_map::startup()
+void CityMap::startup()
 {
     std::string input;
     std::cout << "Welcome to the city map program! Please type one of the following: " << std::endl;
@@ -413,7 +413,7 @@ void City_map::startup()
     } while (true);
 }
 
-void City_map::reload()
+void CityMap::reload()
 {
     try
     {
